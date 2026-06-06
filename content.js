@@ -14,6 +14,9 @@ console.log("[Quiet Apply] content script loaded", location.href);
 const MAX_JOB_CHARS = 12000;
 const MIN_DESCRIPTION_CHARS = 200;
 
+// Flip to true in dev to re-enable verbose per-selector / rejection logging.
+const DEBUG_EXTRACT = false;
+
 const DESCRIPTION_SELECTORS = [
   '[data-testid="job-details-job-description"]',
   ".jobs-description-content__text",
@@ -236,7 +239,9 @@ function findVisibleJobDescription() {
         rejected: "selector-error",
       };
       perSelector.push(errEntry);
-      console.log("[Quiet Apply] selector check", errEntry);
+      if (DEBUG_EXTRACT) {
+        console.log("[Quiet Apply] selector check", errEntry);
+      }
       continue;
     }
 
@@ -299,7 +304,9 @@ function findVisibleJobDescription() {
       rejected,
     };
     perSelector.push(entry);
-    console.log("[Quiet Apply] selector check", entry);
+    if (DEBUG_EXTRACT) {
+      console.log("[Quiet Apply] selector check", entry);
+    }
   }
 
   const primarySelectorCandidateCount = visibleCandidates;
@@ -319,12 +326,14 @@ function findVisibleJobDescription() {
       bestCandidateSource = "fallback";
     }
 
-    console.log("[Quiet Apply] fallback scan", {
+    console.log("[Quiet Apply] fallback scan summary", {
       fallbackCandidateCount,
-      rejected: fallbackRejected,
       picked: bestCandidateSource === "fallback",
       bestLen,
     });
+    if (DEBUG_EXTRACT) {
+      console.log("[Quiet Apply] fallback scan rejected", fallbackRejected);
+    }
   }
 
   const diagnostics = {
@@ -486,7 +495,16 @@ function extractVisibleJobDescriptionAndStore(reason) {
     rejectionSummary: diagnostics.rejectionSummary,
     failureReason,
   };
-  console.log("[Quiet Apply] extraction attempt", attempt);
+  console.log("[Quiet Apply] extraction attempt summary", {
+    reason: attempt.reason,
+    bestCandidateSource: attempt.bestCandidateSource,
+    bestCandidateSelector: attempt.bestCandidateSelector,
+    bestCandidateLength: attempt.bestCandidateLength,
+    failureReason: attempt.failureReason,
+  });
+  if (DEBUG_EXTRACT) {
+    console.log("[Quiet Apply] extraction attempt detail", attempt);
+  }
 
   if (!text || text.length <= MIN_DESCRIPTION_CHARS) {
     console.log("[Quiet Apply] extract skipped (no stable description; storage preserved)", {
@@ -570,8 +588,9 @@ function watchUrlChanges() {
     }
     lastHref = location.href;
     console.log("[Quiet Apply] url change detected", location.href);
-    extractVisibleJobDescriptionAndStore("url-change");
-    setTimeout(() => extractVisibleJobDescriptionAndStore("url-change-delayed"), 1500);
+    // Do not extract immediately: let the SPA swap the panel first.
+    setTimeout(() => extractVisibleJobDescriptionAndStore("url-change"), 1200);
+    setTimeout(() => extractVisibleJobDescriptionAndStore("url-change-delayed"), 2500);
   }, 800);
 }
 

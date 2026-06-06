@@ -1,57 +1,174 @@
 <!DOCTYPE html>
-<html>
+<html lang="en">
 <head>
+  <meta charset="UTF-8">
   <title>Quiet Apply</title>
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700&display=swap" rel="stylesheet">
   <link rel="stylesheet" href="styles.css">
 </head>
-<body>
+<body class="copilot">
 
-  <div class="header">
-    <h1>Quiet Apply</h1>
-    <p>Apply smarter, not louder.</p>
+  <div class="copilot-shell">
+
+    <header class="copilot-header">
+      <div class="brand">
+        <img
+          src="icons/icon48.png"
+          alt=""
+          class="brand__logo"
+          width="36"
+          height="36"
+        >
+        <div class="brand__text">
+          <h1 class="brand__title">Quiet Apply</h1>
+          <p class="brand__tagline">Apply smarter, not louder.</p>
+        </div>
+      </div>
+    </header>
+
+    <section class="source-context" aria-label="Analysis sources">
+      <article class="context-card context-card--job" id="jobContextCard">
+        <div class="context-card__head">
+          <span class="context-card__dot" id="syncDot" aria-hidden="true"></span>
+          <p class="context-card__label">LinkedIn job</p>
+        </div>
+        <h2 class="context-card__title" id="syncRole">No job synced</h2>
+        <p class="context-card__sub" id="syncCompany">Open a job on LinkedIn</p>
+        <p class="context-card__meta" id="syncMeta"></p>
+      </article>
+
+      <article class="context-card context-card--resume" id="resumeContextCard">
+        <div class="context-card__head">
+          <span class="context-card__dot context-card__dot--resume" id="resumeDot" aria-hidden="true"></span>
+          <p class="context-card__label">Resume</p>
+        </div>
+        <h2 class="context-card__title" id="resumeContextTitle">No resume yet</h2>
+        <p class="context-card__sub" id="resumeContextSub">Upload to enable analysis</p>
+        <p class="context-card__meta" id="resumeContextMeta"></p>
+      </article>
+    </section>
+
+    <div class="action-bar" role="toolbar" aria-label="Workspace actions">
+      <button type="button" id="extractBtn" class="btn-ghost">Refresh Job</button>
+      <button type="button" id="uploadResumeBtn" class="btn-ghost">Upload Resume</button>
+      <button type="button" id="clearWorkspaceBtn" class="btn-ghost btn-ghost--muted">Clear Workspace</button>
+      <input type="file" id="resumeFileInput" class="hidden" accept=".txt,.pdf">
+    </div>
+
+    <p id="extractStatus" class="visually-hidden" aria-live="polite"></p>
+
+    <main class="copilot-main workspace-surface">
+
+      <div id="workspaceEmpty" class="workspace-empty">
+        <div class="workspace-empty__visual" aria-hidden="true">
+          <img src="icons/icon48.png" alt="" class="workspace-empty__logo" width="40" height="40">
+          <div class="workspace-empty__preview"></div>
+        </div>
+        <p class="workspace-empty__title">Analyze LinkedIn jobs in seconds.</p>
+        <ul class="workspace-empty__list">
+          <li>Matched skills</li>
+          <li>Missing requirements</li>
+          <li>ATS alignment</li>
+          <li>AI recommendations</li>
+          <li>Tailored summaries</li>
+        </ul>
+        <div class="workspace-empty__actions">
+          <button type="button" id="emptyOpenLinkedInBtn" class="btn-primary btn-primary--compact">Open LinkedIn Jobs</button>
+          <button type="button" id="emptyUploadBtn" class="btn-ghost">Upload Resume</button>
+        </div>
+      </div>
+
+      <div id="insightsPrompt" class="insights-prompt hidden">
+        <p class="insights-prompt__text">Sources are ready. Generate analysis to unlock match insights.</p>
+      </div>
+
+      <div id="results" class="dashboard hidden">
+
+        <section class="dash-cell dash-cell--score" aria-label="Match score">
+          <p class="dash-label">Match score</p>
+          <div class="score-hero">
+            <div class="score-hero__ring-wrap">
+              <svg class="score-ring" viewBox="0 0 120 120" aria-hidden="true">
+                <defs>
+                  <linearGradient id="scoreRingGrad" x1="0%" y1="0%" x2="100%" y2="100%">
+                    <stop offset="0%" stop-color="#3b82f6"/>
+                    <stop offset="100%" stop-color="#1d4ed8"/>
+                  </linearGradient>
+                </defs>
+                <circle class="score-ring__track" cx="60" cy="60" r="46"/>
+                <circle class="score-ring__fill" id="scoreRingFill" cx="60" cy="60" r="46"/>
+              </svg>
+              <div class="score-hero__center">
+                <span id="matchScore" class="score-hero__value">0%</span>
+              </div>
+            </div>
+            <div class="score-hero__meta">
+              <span id="scoreLabel" class="score-hero__qualifier">—</span>
+              <p id="scoreConfidence" class="score-hero__confidence"></p>
+              <p id="experienceLevel" class="score-hero__experience"></p>
+              <p id="scoreCountsLine" class="score-hero__counts-line"></p>
+            </div>
+          </div>
+        </section>
+
+        <section class="dash-cell dash-cell--matched">
+          <p class="dash-label">Matched skills</p>
+          <div id="matchedSkills" class="pill-row pill-row--matched" role="list"></div>
+        </section>
+
+        <section class="dash-cell dash-cell--missing">
+          <p class="dash-label">Missing skills</p>
+          <div id="missingSkills" class="pill-row pill-row--missing" role="list"></div>
+        </section>
+
+        <section class="dash-cell dash-cell--recs">
+          <p class="dash-label">AI recommendations</p>
+          <div id="resumeSuggestions" class="rec-list"></div>
+        </section>
+
+        <section class="dash-cell dash-cell--summary">
+          <div class="dash-cell__head">
+            <p class="dash-label">Professional summary</p>
+            <button type="button" id="copySummaryBtn" class="btn-ghost btn-ghost--sm">Copy</button>
+          </div>
+          <div class="summary-doc">
+            <div id="professionalSummary" class="summary-doc__body" role="textbox" aria-readonly="true" tabindex="0"></div>
+          </div>
+        </section>
+
+        <div id="jobRequirements" class="hidden" aria-hidden="true"></div>
+        <div id="detectedSkills" class="hidden" aria-hidden="true"></div>
+
+      </div>
+
+      <details class="raw-expand" id="resumeViewPanel">
+        <summary class="raw-expand__trigger">View resume</summary>
+        <div class="raw-expand__body">
+          <textarea id="resumeText" class="field-compact" placeholder="Resume text for analysis"></textarea>
+          <p id="profileStatus" class="meta-line">Profile autosaved locally</p>
+        </div>
+      </details>
+
+    </main>
+
+    <footer class="copilot-footer">
+      <button type="button" id="generateBtn" class="btn-primary">
+        <span class="btn-primary__icon" aria-hidden="true">✦</span>
+        <span>Generate Analysis</span>
+      </button>
+      <div class="footer-status" role="status" aria-live="polite">
+        <span id="analysisSpinner" class="analysis-spinner hidden" aria-hidden="true"></span>
+        <p id="analysisStatus" class="meta-line analysis-status"></p>
+      </div>
+    </footer>
+
+    <textarea id="jobText" class="visually-hidden" aria-hidden="true" tabindex="-1"></textarea>
+
   </div>
 
-  <button id="extractBtn">Extract Job Description</button>
-  <p id="extractStatus" class="statusText"></p>
-
-  <label for="jobText">Job Description</label>
-  <textarea id="jobText" placeholder="Open a job posting and click Extract Job Description"></textarea>
-
-  <div class="resumeHeader">
-    <label for="resumeText">Your Resume / Profile</label>
-    <div>
-      <button id="saveProfileBtn" class="smallBtn">Save</button>
-      <button id="clearProfileBtn" class="smallBtn dangerBtn">Clear</button>
-    </div>
-  </div>
-
-  <p id="profileStatus" class="statusText">No saved profile yet.</p>
-  <textarea id="resumeText" placeholder="Paste your resume or professional profile once and save it"></textarea>
-
-  <button id="generateBtn">Generate Analysis</button>
-  <p id="analysisStatus" class="statusText"></p>
-
-  <div id="results" class="results hidden">
-    <h2>Application Analysis</h2>
-
-    <div class="scoreBox">
-      <span>Match Score</span>
-      <strong id="matchScore">0%</strong>
-    </div>
-
-    <h3>Missing Skills</h3>
-    <ul id="missingSkills"></ul>
-
-    <h3>Resume Suggestions</h3>
-    <ul id="resumeSuggestions"></ul>
-
-    <div class="sectionHeader">
-      <h3>Professional Summary</h3>
-      <button id="copyCoverLetterBtn" class="smallBtn">Copy</button>
-    </div>
-    <textarea id="coverLetter" readonly placeholder="Generated summary will appear here"></textarea>
-  </div>
-
+  <script src="libs/pdfjs/pdf.min.js"></script>
   <script src="popup.js"></script>
 
 </body>

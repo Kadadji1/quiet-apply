@@ -1,0 +1,235 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="utf-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1" />
+  <meta name="robots" content="index, follow" />
+  <title>Quiet Apply Privacy Policy</title>
+  <style>
+    :root {
+      --text: #1f2329;
+      --muted: #5b6470;
+      --border: #e3e6ea;
+      --accent: #2b6cb0;
+      --bg: #ffffff;
+      --soft: #f6f8fa;
+    }
+    * { box-sizing: border-box; }
+    html { -webkit-text-size-adjust: 100%; }
+    body {
+      margin: 0;
+      background: var(--bg);
+      color: var(--text);
+      font-family: -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto,
+        Helvetica, Arial, sans-serif;
+      font-size: 17px;
+      line-height: 1.6;
+    }
+    .wrap {
+      max-width: 760px;
+      margin: 0 auto;
+      padding: 32px 20px 64px;
+    }
+    header {
+      border-bottom: 1px solid var(--border);
+      padding-bottom: 16px;
+      margin-bottom: 28px;
+    }
+    h1 {
+      font-size: 1.9rem;
+      line-height: 1.25;
+      margin: 0 0 8px;
+    }
+    h2 {
+      font-size: 1.25rem;
+      margin: 36px 0 12px;
+      padding-top: 8px;
+    }
+    p { margin: 0 0 14px; }
+    ul { margin: 0 0 16px; padding-left: 22px; }
+    li { margin: 6px 0; }
+    a { color: var(--accent); }
+    .meta { color: var(--muted); font-size: 0.95rem; margin: 0; }
+    .note {
+      background: var(--soft);
+      border: 1px solid var(--border);
+      border-radius: 8px;
+      padding: 14px 16px;
+      margin: 0 0 24px;
+      color: var(--muted);
+      font-size: 0.97rem;
+    }
+    .table-wrap { overflow-x: auto; margin: 0 0 18px; }
+    table {
+      border-collapse: collapse;
+      width: 100%;
+      font-size: 0.95rem;
+      min-width: 520px;
+    }
+    th, td {
+      border: 1px solid var(--border);
+      padding: 10px 12px;
+      text-align: left;
+      vertical-align: top;
+    }
+    th { background: var(--soft); font-weight: 600; }
+    footer {
+      margin-top: 48px;
+      padding-top: 16px;
+      border-top: 1px solid var(--border);
+      color: var(--muted);
+      font-size: 0.9rem;
+    }
+    @media (max-width: 480px) {
+      body { font-size: 16px; }
+      .wrap { padding: 24px 16px 48px; }
+      h1 { font-size: 1.55rem; }
+    }
+  </style>
+</head>
+<body>
+  <div class="wrap">
+    <header>
+      <h1>Quiet Apply Privacy Policy</h1>
+      <p class="meta">Last updated: June 6, 2026</p>
+      <p class="meta">Applies to: Quiet Apply Chrome Extension (free beta / testing version)</p>
+    </header>
+
+    <p>
+      Quiet Apply ("the extension", "we", "us") helps you analyze LinkedIn job
+      descriptions against your resume. This policy explains exactly what data the
+      extension handles, where it goes, and what we do <strong>not</strong> do
+      with it.
+    </p>
+
+    <p class="note">
+      This is a <strong>free beta / testing version</strong> intended for testing.
+      Behavior and this policy may change as the product evolves.
+    </p>
+
+    <h2>1. What the extension does</h2>
+    <ul>
+      <li>Reads the <strong>visible job description text</strong> on LinkedIn job pages you open.</li>
+      <li>Lets you <strong>upload or paste your resume</strong> inside the extension popup.</li>
+      <li>
+        Sends your resume text and the job description text to the
+        <strong>Quiet Apply backend</strong>, which uses AI to produce a match
+        score, matched skills, missing skills, recommendations, and a
+        professional summary.
+      </li>
+      <li>Stores recent job context and your resume locally in your browser so the popup can display results.</li>
+    </ul>
+
+    <h2>2. Data we process</h2>
+    <div class="table-wrap">
+      <table>
+        <thead>
+          <tr>
+            <th>Data</th>
+            <th>Source</th>
+            <th>Purpose</th>
+            <th>Where it goes</th>
+          </tr>
+        </thead>
+        <tbody>
+          <tr>
+            <td>Visible job description text</td>
+            <td>The LinkedIn job page you are viewing</td>
+            <td>Job analysis</td>
+            <td>Stored locally; sent to Quiet Apply backend when you run an analysis</td>
+          </tr>
+          <tr>
+            <td>Job title / company (best-effort)</td>
+            <td>LinkedIn page or fallback metadata</td>
+            <td>Display only</td>
+            <td>Stored locally; may be sent with the analysis request</td>
+          </tr>
+          <tr>
+            <td>Resume text</td>
+            <td>You (upload or paste)</td>
+            <td>Job analysis</td>
+            <td>Stored locally; sent to Quiet Apply backend when you run an analysis</td>
+          </tr>
+          <tr>
+            <td>Analysis results</td>
+            <td>Quiet Apply backend</td>
+            <td>Shown in the popup</td>
+            <td>Stored locally in your browser</td>
+          </tr>
+        </tbody>
+      </table>
+    </div>
+    <p>
+      The job title and company may use <strong>fallback metadata</strong> (for
+      example a generic "LinkedIn job" label) when the page does not clearly
+      expose them. This does not affect the analysis, which relies on the job
+      description text.
+    </p>
+
+    <h2>3. Data we do NOT collect</h2>
+    <ul>
+      <li>We do <strong>not</strong> collect your LinkedIn credentials, passwords, or login session.</li>
+      <li>We do <strong>not</strong> read your LinkedIn messages, connections, or private profile data.</li>
+      <li>We do <strong>not</strong> track your browsing across other websites.</li>
+      <li>We do <strong>not</strong> sell your data to anyone.</li>
+      <li>We do <strong>not</strong> run on pages other than LinkedIn job pages.</li>
+    </ul>
+
+    <h2>4. Where your data is sent</h2>
+    <p>
+      To generate an analysis, your <strong>resume text</strong> and the
+      <strong>job description text</strong> are sent over an encrypted connection
+      to the Quiet Apply backend. The backend may forward this text to
+      <strong>third-party AI providers</strong> solely to produce the analysis
+      result. This text is processed to return your results and is not used to
+      build advertising profiles or sold to third parties.
+    </p>
+
+    <h2>5. Local storage</h2>
+    <p>
+      The extension uses Chrome's local storage (<code>chrome.storage.local</code>)
+      on your own device to hold the most recent job description, optional
+      title/company, your resume text, and the latest analysis. You can clear this
+      at any time by removing the extension or clearing extension data in Chrome.
+    </p>
+
+    <h2>6. Data retention</h2>
+    <ul>
+      <li><strong>Local data</strong> stays on your device until you clear it or remove the extension.</li>
+      <li>
+        <strong>Backend processing</strong> is performed to return your analysis.
+        Because this is a beta, retention on the backend may change; we keep only
+        what is needed to provide and improve the analysis feature and do not sell it.
+      </li>
+    </ul>
+
+    <h2>7. Your choices</h2>
+    <ul>
+      <li>
+        Don't want text sent for analysis? Simply don't run an analysis — the
+        extension will not send resume or job text unless you trigger it.
+      </li>
+      <li>Want to stop all data handling? Remove the extension from Chrome.</li>
+    </ul>
+
+    <h2>8. Children</h2>
+    <p>Quiet Apply is not directed to children under 13 and should not be used by them.</p>
+
+    <h2>9. Changes to this policy</h2>
+    <p>
+      We may update this policy as the beta evolves. Material changes will be
+      reflected by updating the "Last updated" date above.
+    </p>
+
+    <h2>10. Contact</h2>
+    <p>
+      For privacy questions or data requests related to this beta, contact us at
+      <a href="mailto:[YOUR SUPPORT EMAIL]">[YOUR SUPPORT EMAIL]</a>.
+    </p>
+
+    <footer>
+      <p>Quiet Apply — Apply smarter, not louder. Free beta / testing version.</p>
+    </footer>
+  </div>
+</body>
+</html>

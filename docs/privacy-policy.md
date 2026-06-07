@@ -85,4 +85,4 @@ reflected by updating the "Last updated" date above.
 ## 10. Contact
 
 For privacy questions or data requests related to this beta, contact the
-developer through the Chrome Web Store listing support channel.
+developer at vladkononov99@gmail.com.

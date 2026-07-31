@@ -1,128 +1,136 @@
 # Quiet Apply
 
-Apply smarter, not louder.
+Quiet Apply is a published Manifest V3 Chrome extension that helps job seekers compare a resume with a LinkedIn job description and receive structured AI-assisted application insights.
 
-Quiet Apply is an AI-powered Chrome extension designed to help job seekers analyze job postings, improve resumes for ATS systems, and generate smarter, more targeted job applications.
+The project was designed, built, tested, and published as a personal product and QA portfolio project.
 
-The project is focused on building a modern AI job application assistant with a clean SaaS-style workflow.
+## What it does
 
-## Vision
+- Extracts job descriptions from LinkedIn job pages
+- Accepts pasted resume text and uploaded PDF/DOCX resumes
+- Compares resume content with job requirements
+- Returns a structured match score, detected requirements, matched skills, missing skills, and resume recommendations
+- Stores the current resume, job context, latest analysis, settings, and request usage in Chrome Storage
+- Preserves analysis state after the popup closes
+- Applies a daily analysis limit and validates boundary behavior
 
-Quiet Apply is not just a resume generator.
+## Current status
 
-The long-term goal is to build an AI-powered job intelligence platform that helps users:
+- Published in the Chrome Web Store
+- Public frontend repository
+- Live AI analysis workflow
+- Secure server-side API integration through a separate backend
+- Approximately 10 installs at the time of this update
 
-- Understand job postings
-- Improve ATS compatibility
-- Detect missing skills
-- Tailor resumes to specific roles
-- Generate professional summaries and cover letters
-- Simulate recruiter feedback
-- Make smarter application decisions
+The backend repository is private because it contains deployment configuration and server-side integration details. API secrets are not stored in this public extension repository.
 
-## Current MVP Features
+## Architecture
 
-### Chrome Extension
-- Modern popup UI
-- Job description extraction from job pages
-- Resume/profile input
-- Local data storage
-- AI analysis workflow
+### Chrome extension
 
-### AI Backend
-- Node.js + Express backend
+- Manifest V3
+- Popup interface built with JavaScript, HTML, and CSS
+- Content script for LinkedIn DOM extraction
+- Chrome Storage for persistence and request tracking
+- PDF/DOCX resume parsing
+- Structured rendering of AI analysis results
+
+### AI backend
+
+- Node.js and Express
 - OpenAI API integration
-- Hosted on Render
-- Secure server-side API architecture
+- Hosted API endpoint
+- Server-side secret management
+- Structured response contract and error handling
 
-### AI Analysis
-- Resume vs job comparison
-- ATS-style match scoring
-- Missing skills detection
-- Resume improvement suggestions
-- AI-generated professional summary recommendations
+## QA and testing
 
-## Tech Stack
+The extension was tested through approximately 40–60 manual scenarios covering:
+
+- Functional testing
+- Negative testing
+- Integration testing
+- Regression testing
+- Exploratory testing
+- Boundary testing
+- File validation
+- Popup lifecycle and state persistence
+- Dynamic LinkedIn DOM behavior
+- Request-limit reset and blocking behavior
+- Missing, malformed, partial, and delayed API responses
+
+Approximately 10–15 substantial defects were identified and fixed before publication.
+
+## Example failure uncovered
+
+During testing, the model occasionally returned malformed or structurally inconsistent output. Required fields such as match score, skill gaps, or recommendations could be missing, renamed, or returned in an unexpected format, which caused parser failures in the popup.
+
+The issue was reproduced across different resumes and LinkedIn job descriptions by comparing raw API responses with the expected response structure. Longer and less structured inputs made the failure easier to reproduce.
+
+The fix included:
+
+- Tightening the prompt and response requirements
+- Defining a stricter structured response contract
+- Adding client-side response validation
+- Adding fallback parsing for recoverable output
+- Returning a clear user-facing error when recovery was not possible
+- Retesting missing, partial, malformed, and nonconforming response scenarios
+
+## Other reliability work
+
+- Added validation for empty job descriptions and insufficient resume text
+- Added handling for unsupported, unreadable, oversized, and low-text files
+- Added timeout handling for delayed backend responses
+- Added fallbacks for dynamic or incomplete LinkedIn page states
+- Persisted resume and analysis state across popup closures
+- Tested the daily request limit, sixth-request blocking, persistence after restart, and daily reset behavior
+
+## Tech stack
 
 ### Frontend
+
 - JavaScript
 - HTML
 - CSS
 - Chrome Extension APIs
+- Chrome Storage
 
 ### Backend
+
 - Node.js
-- Express.js
+- Express
 - OpenAI API
-- Render deployment
+- Hosted deployment
 
-### Future Infrastructure
-- PostgreSQL or Supabase
-- User authentication
-- Stripe subscriptions
-- Analytics dashboard
+### Testing and development
 
-## Product Roadmap
+- Chrome DevTools
+- Manual test design
+- Linear
+- Git and GitHub
+- Cursor and ChatGPT as development assistants, with manual validation of generated code and behavior
 
-### Phase 1 — AI MVP
-- Connect extension to AI backend
-- Structured AI responses
-- ATS analysis cards
-- Loading states and polished UI
+## Privacy and security
 
-### Phase 2 — Deep Job Intelligence
-- Recruiter-style feedback
-- Hidden requirement detection
-- Seniority analysis
-- Company culture insights
-- Job quality scoring
+- No login or user account is required for the current MVP
+- Resume text and extension state are stored locally in Chrome Storage
+- API credentials are managed server-side and are not included in the public repository
+- The extension requests only the permissions required for LinkedIn job extraction, local storage, tabs, and scripting
 
-### Phase 3 — Smart Resume Tailoring
-- AI resume rewriting
-- Keyword optimization
-- Tailored summaries
-- Cover letter generation
-- Multiple resume profiles
+## Known limitations
 
-### Phase 4 — Career Assistant Platform
-- LinkedIn parsing
-- Application tracking
-- Saved job history
-- AI interview preparation
-- Career growth recommendations
+- LinkedIn DOM changes can require selector or fallback updates
+- The current MVP supports one active resume profile
+- AI output can still be incomplete or incorrect, so recommendations should be reviewed by the user
+- Uploaded resume quality depends on extractable text in the source file
+- The extension is an MVP and has limited production usage data
 
-## Monetization Ideas
+## Project ownership
 
-### Free Tier
-- Limited daily AI analyses
-- Basic ATS scoring
-- Limited resume optimization
+I defined the product scope, user flow, popup UX, Manifest V3 configuration, content-script behavior, resume parsing, storage model, request-limit logic, prompt and response structure, API integration, error handling, testing strategy, privacy documentation, Chrome Web Store listing, and publication workflow.
 
-### Pro Subscription
-- Unlimited analyses
-- Advanced ATS optimization
-- Tailored resume rewriting
-- AI cover letters
-- Multiple resume profiles
-- Recruiter simulation tools
+Cursor and ChatGPT were used as coding assistants. I reviewed, tested, debugged, and validated the implementation and final behavior.
 
-## Current Status
+## Repository
 
-### Completed
-- Branding and product direction
-- Chrome extension foundation
-- Live AI backend deployment
-- OpenAI integration
-- GitHub and Render deployment pipeline
-- Extension branding and icon system
-
-### In Progress
-- Connecting live AI analysis to popup UI
-- Structured response rendering
-- Modern SaaS-style interface redesign
-
-## Project Philosophy
-
-Quiet Apply focuses on clarity, simplicity, and practical AI assistance instead of overwhelming users with generic AI output.
-
-The goal is to create a clean, fast, and intelligent tool that genuinely improves the job application process.
+This repository contains the public Chrome extension code. The backend is maintained separately in a private repository.

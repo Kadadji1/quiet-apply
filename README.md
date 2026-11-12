@@ -6,6 +6,15 @@ The project was designed, built, tested, and published as a personal product and
 
 [Install from Chrome Web Store](https://chromewebstore.google.com/detail/quiet-apply/hohgkobkheppgkoacelamplebkpficdh) · [Project case study](https://vlad-kononov-portfolio.duskyskink6.chatgpt.site/#/projects/quiet-apply) · [QA case studies](docs/qa/case-studies.md) · [Regression checklist](docs/qa/regression-checklist.md)
 
+## Product preview
+
+Published promotional images from the [Chrome Web Store listing](https://chromewebstore.google.com/detail/quiet-apply/hohgkobkheppgkoacelamplebkpficdh), showing the analysis and writing workflows. These are store graphics with illustrative data.
+
+<p>
+  <img src="docs/assets/store-analysis.png" alt="Quiet Apply store preview: LinkedIn job analysis, matched skills and skill gaps" width="480" />
+  <img src="docs/assets/store-writing.png" alt="Quiet Apply store preview: generated summary and application insights" width="480" />
+</p>
+
 ## What it does
 
 - Extracts job descriptions from LinkedIn job pages

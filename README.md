@@ -4,6 +4,8 @@ Quiet Apply is a published Manifest V3 Chrome extension that helps job seekers c
 
 The project was designed, built, tested, and published as a personal product and QA portfolio project.
 
+[Install from Chrome Web Store](https://chromewebstore.google.com/detail/quiet-apply/hohgkobkheppgkoacelamplebkpficdh) · [Project case study](https://vlad-kononov-portfolio.duskyskink6.chatgpt.site/#/projects/quiet-apply) · [QA case studies](docs/qa/case-studies.md) · [Regression checklist](docs/qa/regression-checklist.md)
+
 ## What it does
 
 - Extracts job descriptions from LinkedIn job pages
@@ -44,6 +46,8 @@ The backend repository is private because it contains deployment configuration a
 - Structured response contract and error handling
 
 ## QA and testing
+
+See the [documented QA cases](docs/qa/case-studies.md) and [reusable regression checklist](docs/qa/regression-checklist.md). These distinguish historical summaries from checks that have not been executed as part of this documentation update.
 
 The extension was tested through approximately 40–60 manual scenarios covering:
 
